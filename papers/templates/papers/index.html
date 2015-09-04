@@ -1,0 +1,16 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Papers{% endblock %}
+
+{% block content %}
+    {% if paper_list %}
+        <ul>
+        {% for paper in paper_list %}
+{#            {{ paper.title }}#}
+            <li><a href="{% url 'papers:show' paper.id %}">{{ paper.title }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No papers are available.</p>
+    {% endif %}
+{% endblock %}

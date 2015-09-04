@@ -1,0 +1,8 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Paper{% endblock %}
+
+{% block content %}
+    {{  paper.title }}
+    <a href="{% url 'papers:index' %}">Go to list</a>
+{% endblock %}
