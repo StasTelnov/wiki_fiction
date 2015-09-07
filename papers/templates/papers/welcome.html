@@ -1,0 +1,15 @@
+{% extends "layouts/base.html" %}
+{% load staticfiles %}
+
+{% block stylesheets %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'papers/css/welcome.css' %}">
+{% endblock %}
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+    <div class="starter-template">
+        <h1>Hello!</h1>
+        <p class="lead">Don't worry. Be happy.</p>
+    </div>
+{% endblock %}

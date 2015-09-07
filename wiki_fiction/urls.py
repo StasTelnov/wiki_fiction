@@ -15,10 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from papers.views import IndexPapers
+from papers.views import welcome
 
 urlpatterns = [
-    url(r'^$', IndexPapers.as_view()),
+    url(r'^$', welcome, name='welcome'),
     url(r'^papers/', include('papers.urls', namespace='papers')),
     url(r'^admin/', include(admin.site.urls)),
 ]

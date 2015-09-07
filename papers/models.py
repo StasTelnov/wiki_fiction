@@ -31,4 +31,3 @@ class Comment(models.Model):
 
     def __str__(self):
         return "%s..." % self.text[:10]
-
