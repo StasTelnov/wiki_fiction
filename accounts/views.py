@@ -1,9 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 
 
 def welcome(request):
-    return render(request, 'accounts/welcome.html')
+    next_to = request.GET.get('next')
+    if next_to:
+        messages.error(request, "You're should login before continue.")
+    return render(request, 'accounts/welcome.html', {'next': next_to})
 
 
 def sign_in(request):
@@ -13,14 +17,16 @@ def sign_in(request):
     if user is not None:
         if user.is_active:
             login(request, user)
-            # Redirect to a success page.
-        # else:
-            # Return a 'disabled account' error message
-    # else:
-        # Return an 'invalid login' error message.
-    return render(request, 'accounts/welcome.html')
+            messages.success(request, "You're successfully sign in!")
+            return redirect(request.POST.get('next', 'welcome'))
+        else:
+            messages.warning(request, "Sorry, but your account disabled.")
+    else:
+        messages.warning(request, "Invalid login.")
+    return redirect('welcome')
 
 
 def sing_out(request):
     logout(request)
-    return render(request, 'accounts/welcome.html')
+    messages.success(request, "You're successfully sign out!")
+    return redirect('welcome')

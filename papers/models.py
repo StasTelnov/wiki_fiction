@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from .validators import between_validator
 
 
 class Tag(models.Model):
@@ -14,7 +15,7 @@ class Paper(models.Model):
     tag = models.ManyToManyField(Tag)
     title = models.CharField(max_length=30, db_index=True)
     text = models.TextField()
-    rating = models.FloatField(null=False, default=0)
+    rating = models.FloatField(null=False, default=0, validators=[between_validator(0, 10)])
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -26,7 +27,7 @@ class Comment(models.Model):
     user = models.ForeignKey(User)
     paper = models.ForeignKey(Paper)
     text = models.TextField()
-    rating = models.FloatField()
+    rating = models.FloatField(validators=[between_validator(0, 10)])
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

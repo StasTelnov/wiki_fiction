@@ -111,6 +111,10 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
+AUTHENTICATION_BACKENDS = (
+    'accounts.backends.EmailOrUsernameModelBackend',
+)
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

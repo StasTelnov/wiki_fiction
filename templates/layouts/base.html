@@ -12,48 +12,14 @@
     </head>
     <body>
         {% block header %}
-            <nav class="navbar navbar-inverse navbar-fixed-top">
-              <div class="container">
-                <div class="navbar-header">
-                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                  </button>
-                  <a class="navbar-brand" href="{% url 'welcome' %}">Project name</a>
-                </div>
-                <div id="navbar" class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a href="{% url 'papers:index' %}">Papers</a></li>
-                    </ul>
-                    {% if user.is_authenticated %}
-                        <div class="navbar-form navbar-right">
-                            <a class="btn btn-success" href="{% url 'accounts:logout' %}">Sign out</a>
-                        </div>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a>Welcome, {{ user.username }}!</a></li>
-                        </ul>
-{#                        <div class="navbar-form navbar-right">Logged in as {{ user.username }}.</div>#}
-                    {% else %}
-                      <form action="{% url 'accounts:login' %}" method="post" class="navbar-form navbar-right">
-                        {% csrf_token %}
-                        <div class="form-group">
-                          <input name="username" type="text" placeholder="Email or Username" class="form-control">
-                        </div>
-                        <div class="form-group">
-                          <input name="password" type="password" placeholder="Password" class="form-control">
-                        </div>
-                        <button type="submit" class="btn btn-success">Sign in</button>
-                      </form>
-                    {% endif %}
-                </div><!--/.nav-collapse -->
-              </div>
-            </nav>
+            {% include 'layouts/base_partials/header.html' %}
         {% endblock %}
 
         <div class="container">
-            {% block content %}{% endblock %}
+            {% include 'layouts/base_partials/massages.html' %}
+            <div class="row">
+                {% block content %}{% endblock %}
+            </div>
         </div>
 
         <!-- Placed at the end of the document so the pages load faster -->
