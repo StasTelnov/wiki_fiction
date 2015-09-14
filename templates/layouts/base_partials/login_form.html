@@ -7,5 +7,7 @@
       <input name="password" type="password" placeholder="Password" class="form-control">
     </div>
     <button type="submit" class="btn btn-success">Sign in</button>
-    <input type="hidden" name="next" value="{{ next }}">
+    {% if request.GET.next %}
+        <input type="hidden" name="next" value="{{ request.GET.next }}">
+    {% endif %}
 </form>

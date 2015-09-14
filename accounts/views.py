@@ -4,10 +4,9 @@ from django.contrib import messages
 
 
 def welcome(request):
-    next_to = request.GET.get('next')
-    if next_to:
+    if 'next' in request.GET:
         messages.error(request, "You're should login before continue.")
-    return render(request, 'accounts/welcome.html', {'next': next_to})
+    return render(request, 'accounts/welcome.html')
 
 
 def sign_in(request):
