@@ -7,10 +7,10 @@ class PaperForm(ModelForm):
     class Meta:
         model = Paper
         fields = [
-            'user',
-            'tag',
+            'tags',
             'title',
             'text',
             'rating',
         ]
         widgets = {'tag': forms.SelectMultiple(attrs={'class': 'chosen-select', 'width': '170px'})}
+

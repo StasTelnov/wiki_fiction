@@ -49,6 +49,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'accounts.auth_required_middleware.AuthRequiredMiddleware',
 )
 
 ROOT_URLCONF = 'wiki_fiction.urls'

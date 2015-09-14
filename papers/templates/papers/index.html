@@ -10,7 +10,7 @@
 
 {% block content %}
     <p>
-        <a href="{% url 'papers:new' %}" class="btn btn-success">Add paper</a>
+        <a href="{% url 'papers:new' %}" class="btn btn-primary">Add paper</a>
     </p>
     {% if paper_list %}
         <table class="table table-striped">
@@ -18,11 +18,12 @@
             <tr>
               <th class="col-md-1">#</th>
               <th class="col-md-1">Title</th>
-              <th class="col-md-5">Text</th>
+              <th class="col-md-2">Text</th>
+              <th class="col-md-2">Tags</th>
               <th class="col-md-1">Rating</th>
               <th class="col-md-2">Created at</th>
               <th class="col-md-1">User</th>
-              <th class="col-md-1"></th>
+              <th class="col-md-2"></th>
             </tr>
           </thead>
           <tbody>
@@ -31,11 +32,18 @@
                   <th scope="row">{{ paper.id }}</th>
                   <td>{{ paper.title }}</td>
                   <td>{{ paper.text }}</td>
+                  <td>{{ paper.tag_names }}
+{#                    {% for tag_name in paper.tag_names %}#}
+{#                        tag.name#}
+{#                    {% endfor %}#}
+                  </td>
                   <td>{{ paper.rating }}</td>
                   <td>{{ paper.created_at|date:"d b, Y" }}</td>
                   <td>{{ paper.user.get_full_name }}</td>
                   <td>
-                      <a href="{% url 'papers:show' paper.id %}" class="btn btn-success">Show</a>
+                      <a href="{% url 'papers:show' paper.id %}" class="btn btn-sm btn-success">Show</a>
+                      <a href="{% url 'papers:edit' paper.id %}" class="btn btn-sm btn-warning">Edit</a>
+                      <a href="{% url 'papers:delete' paper.id %}" class="btn btn-sm btn-danger">Delete</a>
                   </td>
                 </tr>
             {% endfor %}
