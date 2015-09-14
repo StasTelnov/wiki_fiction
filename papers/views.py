@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.views import generic
-from django.views.generic.edit import FormView
+from django.views.generic.edit import CreateView
 from .models import Paper
 from .forms import PaperForm
 
@@ -24,13 +24,6 @@ class ShowPaper(LoginRequiredMixin, generic.DetailView):
     template_name = 'papers/show.html'
 
 
-class NewPaper(LoginRequiredMixin, FormView):
+class NewPaper(LoginRequiredMixin, CreateView):
     template_name = 'papers/new.html'
     form_class = PaperForm
-    success_url = 'papers/show'
-
-    # def form_valid(self, form):
-    #     # This method is called when valid form data has been POSTed.
-    #     # It should return an HttpResponse.
-    #     form.send_email()
-    #     return super(NewPaper, self).form_valid(form)

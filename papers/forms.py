@@ -13,5 +13,4 @@ class PaperForm(ModelForm):
             'text',
             'rating',
         ]
-        widgets = {'tag': forms.SelectMultiple(attrs={'class': 'chosen-select'})}
-
+        widgets = {'tag': forms.SelectMultiple(attrs={'class': 'chosen-select', 'width': '170px'})}

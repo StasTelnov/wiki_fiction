@@ -19,6 +19,10 @@ class Paper(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def get_absolute_url(self):
+        from django.core.urlresolvers import reverse
+        return reverse('papers:show', args=[str(self.id)])
+
     def __str__(self):
         return self.title
 

@@ -7,6 +7,7 @@
         {% block stylesheets %}
             <link rel="stylesheet" type="text/css" href="{% static 'wiki_fiction/twitter_bootstrap/css/bootstrap.css' %}">
             <link rel="stylesheet" type="text/css" href="{% static 'wiki_fiction/application.css' %}">
+            <link rel="stylesheet" type="text/css" href="{% static 'wiki_fiction/chosen/css/chosen.css' %}">
         {% endblock %}
         <title>{% block title %}{% endblock %}</title>
     </head>
@@ -26,6 +27,8 @@
         {% block javascripts %}
             <script type="text/javascript" src="{% static 'wiki_fiction/jquery/js/jquery-1.11.3.js' %}"></script>
             <script type="text/javascript" src="{% static 'wiki_fiction/twitter_bootstrap/js/bootstrap.js' %}"></script>
+            <script type="text/javascript" src="{% static 'wiki_fiction/chosen/js/chosen.jquery.js' %}"></script>
+            <script type="text/javascript" src="{% static 'wiki_fiction/application.js' %}"></script>
         {% endblock %}
     </body>
 </html>
