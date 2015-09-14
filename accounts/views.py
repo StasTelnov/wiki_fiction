@@ -18,7 +18,7 @@ def sign_in(request):
         if user.is_active:
             login(request, user)
             messages.success(request, "You're successfully sign in!")
-            to = request.GET.get('next') or to
+            to = request.POST.get('next') or to
         else:
             messages.warning(request, "Sorry, but your account disabled.")
     else:
