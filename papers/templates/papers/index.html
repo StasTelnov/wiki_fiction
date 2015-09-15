@@ -3,9 +3,7 @@
 {% block title %}Papers{% endblock %}
 
 {% block content %}
-    <p>
-        <a href="{% url 'papers:new' %}" class="btn btn-primary">Add paper</a>
-    </p>
+    <p><a href="{% url 'papers:new' %}" class="btn btn-primary">Add paper</a></p>
     {% if paper_list %}
         <table class="table table-striped">
           <thead>
@@ -26,11 +24,7 @@
                   <th scope="row">{{ paper.id }}</th>
                   <td>{{ paper.title }}</td>
                   <td>{{ paper.text }}</td>
-                  <td>{{ paper.tag_names }}
-{#                    {% for tag_name in paper.tag_names %}#}
-{#                        tag.name#}
-{#                    {% endfor %}#}
-                  </td>
+                  <td>{{ paper.tag_names }}</td>
                   <td>{{ paper.rating }}</td>
                   <td>{{ paper.created_at|date:"d b, Y" }}</td>
                   <td>{{ paper.user.get_full_name }}</td>
@@ -43,8 +37,8 @@
             {% endfor %}
           </tbody>
         </table>
+        {% include 'pagination.html' with list=paper_list %}
     {% else %}
         <p>No papers are available.</p>
     {% endif %}
 {% endblock %}
-

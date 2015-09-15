@@ -1,0 +1,19 @@
+<nav>
+  <ul class="pager">
+      {% if list.has_previous %}
+          <li>
+              <a href="?page={{ list.previous_page_number }}" aria-label="Previous">
+                  <span aria-hidden="true">Previous</span>
+              </a>
+          </li>
+      {% endif %}
+{#    <li><a href="?page={{ list.number }}" class="active">Page {{ list.number }} of {{ list.paginator.num_pages }} <span class="sr-only">(current)</span></a></li>#}
+      {% if list.has_next %}
+        <li>
+          <a href="?page={{ list.next_page_number }}" aria-label="Next">
+            <span aria-hidden="true">Next</span>
+          </a>
+        </li>
+      {% endif %}
+  </ul>
+</nav>

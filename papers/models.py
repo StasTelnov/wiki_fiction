@@ -11,7 +11,7 @@ class Tag(models.Model):
 
 
 class Paper(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, related_name='papers')
     tags = models.ManyToManyField(Tag, related_name='papers')
     title = models.CharField(max_length=30, db_index=True)
     text = models.TextField()
@@ -19,21 +19,21 @@ class Paper(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def get_absolute_url(self):
-        from django.core.urlresolvers import reverse
-        return reverse('papers:show', args=[str(self.id)])
+    def tag_names(self):
+        return ', '.join([tag.name for tag in self.tags.all()])
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
+        # import pdb; pdb.set_trace()
         from django.core.urlresolvers import reverse
-        return reverse('papers:show', kwargs={'pk': self.pk})
+        return reverse('papers:show', args=[self.pk])
 
 
 class Comment(models.Model):
-    user = models.ForeignKey(User)
-    paper = models.ForeignKey(Paper)
+    user = models.ForeignKey(User, related_name='comments')
+    paper = models.ForeignKey(Paper, related_name='comments')
     text = models.TextField()
     rating = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10)])
     created_at = models.DateTimeField(auto_now_add=True)

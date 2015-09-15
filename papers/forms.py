@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Paper
+from .models import Paper, Comment
 from django import forms
 
 
@@ -14,3 +14,11 @@ class PaperForm(ModelForm):
         ]
         widgets = {'tags': forms.SelectMultiple(attrs={'class': 'chosen-select', 'id': 'tags'})}
 
+
+class CommentForm(ModelForm):
+    class Meta:
+        model = Comment
+        fields = [
+            'text',
+            'rating',
+        ]
