@@ -5,7 +5,10 @@ from django.contrib import messages
 
 def welcome(request):
     if 'next' in request.GET:
-        messages.error(request, "You're should login before continue.")
+        if not request.user.is_authenticated():
+            messages.error(request, "You're should login before continue.")
+        else:
+            messages.error(request, "Sorry, but you do not have permission for this action.")
     return render(request, 'accounts/welcome.html')
 
 

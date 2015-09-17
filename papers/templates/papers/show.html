@@ -17,27 +17,29 @@
         <dd>{{  paper.user.get_full_name }}</dd>
     </dl>
 {#    <a href="{% url 'papers:index' %}" class="btn btn-primary">Go to list</a>#}
-    {% if comment_set %}
+    {% if paper.comments.all %}
         <h3 class="text-center">Comments</h3>
         <table class="table table-striped">
           <thead>
             <tr>
               <th class="col-md-1">#</th>
               <th class="col-md-2">User</th>
-              <th class="col-md-6">Text</th>
-              <th class="col-md-2">Rating</th>
+              <th class="col-md-7">Text</th>
+              <th class="col-md-1">Rating</th>
               <th class="col-md-1"></th>
             </tr>
           </thead>
           <tbody>
-            {% for comment in comment_set %}
+            {% for comment in paper.comments.all %}
                 <tr>
                   <th scope="row">{{ comment.id }}</th>
                   <td>{{ comment.user.get_full_name }}</td>
                   <td>{{ comment.text }}</td>
                   <td>{{ comment.rating }}</td>
                   <td>
-                      <a href="{% url 'papers:delete_comment' comment.id %}" class="btn btn-sm btn-danger">Delete</a>
+                      {% if perms.papers.delete_comment %}
+                          <a href="{% url 'papers:delete_comment' comment.id %}" class="btn btn-sm btn-danger">Delete</a>
+                      {% endif %}
                   </td>
                 </tr>
             {% endfor %}

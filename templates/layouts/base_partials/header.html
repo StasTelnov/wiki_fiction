@@ -18,7 +18,7 @@
                     <a class="btn btn-success" href="{% url 'accounts:logout' %}">Sign out</a>
                 </div>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a>Welcome, {{ user.username }}!</a></li>
+                    <li><a>Welcome, {{ user.get_full_name }}!</a></li>
                 </ul>
             {% else %}
                 {% include 'layouts/base_partials/login_form.html' %}

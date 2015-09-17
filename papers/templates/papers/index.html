@@ -3,7 +3,9 @@
 {% block title %}Papers{% endblock %}
 
 {% block content %}
-    <p><a href="{% url 'papers:new' %}" class="btn btn-primary">Add paper</a></p>
+    {% if perms.papers.add_paper %}
+        <p><a href="{% url 'papers:new' %}" class="btn btn-primary">Add paper</a></p>
+    {% endif %}
     {% if paper_list %}
         <table class="table table-striped">
           <thead>
@@ -30,14 +32,18 @@
                   <td>{{ paper.user.get_full_name }}</td>
                   <td>
                       <a href="{% url 'papers:show' paper.id %}" class="btn btn-sm btn-success">Show</a>
-                      <a href="{% url 'papers:edit' paper.id %}" class="btn btn-sm btn-warning">Edit</a>
-                      <a href="{% url 'papers:delete' paper.id %}" class="btn btn-sm btn-danger">Delete</a>
+                      {% if perms.papers.change_paper %}
+                          <a href="{% url 'papers:edit' paper.id %}" class="btn btn-sm btn-warning">Edit</a>
+                      {% endif %}
+                      {% if user.is_superuser or perms.papers.delete_paper and user.id == paper.user_id %}
+                        <a href="{% url 'papers:delete' paper.id %}" class="btn btn-sm btn-danger">Delete</a>
+                      {% endif %}
                   </td>
                 </tr>
             {% endfor %}
           </tbody>
         </table>
-        {% include 'pagination.html' with list=paper_list %}
+            {% include 'pagination.html' with list=paper_list %}
     {% else %}
         <p>No papers are available.</p>
     {% endif %}

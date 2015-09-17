@@ -1,6 +1,8 @@
 # from django.contrib.auth.decorators import login_required
 # from django.views import generic
 # from django.views.generic.edit import FormView
+from django.contrib.auth.decorators import permission_required
+from django.http import Http404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Paper, Comment
@@ -12,7 +14,7 @@ from django.core.urlresolvers import reverse
 def index(request):
     papers = Paper.objects.all().select_related('user').prefetch_related('tags').order_by('id')
 
-    paginator = Paginator(papers, 1)
+    paginator = Paginator(papers, 10)
     page = request.GET.get('page')
     try:
         papers = paginator.page(page)
@@ -22,13 +24,17 @@ def index(request):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         papers = paginator.page(paginator.num_pages)
+    p_range = range(papers.number - 3, papers.number + 4)
 
-    return render(request, 'papers/index.html', {'paper_list': papers})
+    return render(request, 'papers/index.html', {'paper_list': papers, 'p_range': p_range})
 
 
 def show(request, paper_id):
-    paper = get_object_or_404(Paper, pk=paper_id)
-    comment_set = paper.comments.all().select_related('user')
+    try:
+        paper = Paper.objects.prefetch_related('comments__user').get(pk=paper_id)
+    except Paper.DoesNotExist:
+        raise Http404
+
     if request.method == 'POST':
         comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
@@ -41,9 +47,10 @@ def show(request, paper_id):
     else:
         comment_form = CommentForm()
 
-    return render(request, 'papers/show.html', {'paper': paper, 'comment_form': comment_form, 'comment_set': comment_set})
+    return render(request, 'papers/show.html', {'paper': paper, 'comment_form': comment_form})
 
 
+@permission_required('papers.delete_comment')
 def delete_comment(request, comment_id):
     comment = get_object_or_404(Comment, pk=comment_id)
     comment.delete()
@@ -51,6 +58,7 @@ def delete_comment(request, comment_id):
     return redirect(comment.paper)
 
 
+@permission_required('papers.add_paper')
 def new(request):
     if request.method == 'POST':
         form = PaperForm(request.POST)
@@ -68,6 +76,7 @@ def new(request):
     return render(request, 'papers/new.html', {'form': form})
 
 
+@permission_required('papers.change_paper')
 def edit(request, paper_id):
     paper = get_object_or_404(Paper, pk=paper_id)
     form = PaperForm(request.POST or None, instance=paper)
@@ -80,11 +89,13 @@ def edit(request, paper_id):
     return render(request, 'papers/edit.html', {'form': form})
 
 
+@permission_required('papers.delete_paper')
 def delete(request, paper_id):
     paper = get_object_or_404(Paper, pk=paper_id)
     paper.delete()
 
     return redirect(reverse('papers:index'))
+
 
 # class LoginRequiredMixin(object):
 #     @classmethod
