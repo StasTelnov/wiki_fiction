@@ -93,6 +93,7 @@ def edit(request, paper_id):
 def delete(request, paper_id):
     paper = get_object_or_404(Paper, pk=paper_id)
     paper.delete()
+    messages.success(request, 'Paper was successfully deleted')
 
     return redirect(reverse('papers:index'))
 
