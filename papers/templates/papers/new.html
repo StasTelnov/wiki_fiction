@@ -1,8 +1,17 @@
-{% extends "papers/base_papers.html" %}
+{% extends "papers/papers_layout.html" %}
+
+{% block stylesheets %}
+    {{ block.super }}
+    {{ form.media.css }}
+{% endblock %}
 
 {% block title %}New Paper{% endblock %}
 
 {% block content %}
-    {% include 'papers/paper_form.html' %}
+    {% include 'papers/partials/paper_form.html' %}
 {% endblock %}
 
+{% block javascripts %}
+    {{ block.super }}
+    {{ form.media.js }}
+{% endblock %}

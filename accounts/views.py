@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from .forms import MyUserForm
+from django.contrib.auth.models import Group
 
 
 def welcome(request):
@@ -33,3 +35,24 @@ def sing_out(request):
     logout(request)
     messages.success(request, "You're successfully sign out!")
     return redirect('welcome')
+
+
+def sign_up(request):
+    if request.method == 'POST':
+        form = MyUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            user_group = Group.objects.get(name='user')
+            user_group.user_set.add(user)
+            username = request.POST['username']
+            password = request.POST['password1']
+            user = authenticate(username=username, password=password)
+            if user.is_active:
+                login(request, user)
+                messages.success(request, "You're successfully sign up!")
+            else:
+                messages.warning(request, "Sorry, but your account disabled yet.")
+            return redirect('welcome')
+    else:
+        form = MyUserForm()
+    return render(request, 'accounts/sign_up.html', {'form': form})

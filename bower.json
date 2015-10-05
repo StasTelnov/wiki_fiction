@@ -1,0 +1,24 @@
+{
+  "name": "wiki_fiction",
+  "version": "0.0.0",
+  "homepage": "https://github.com/StasTelnov/wiki_fiction",
+  "authors": [
+    "Stas Telnov <stastelnov@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "bootstrap": "~3.3.5",
+    "chosen": "~1.4.2"
+  }
+}

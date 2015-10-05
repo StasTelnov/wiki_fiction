@@ -6,6 +6,7 @@ public_paths = [
     '/welcome/',
     '/accounts/login/',
     '/accounts/logout/',
+    '/accounts/sign_up/',
 ]
 
 

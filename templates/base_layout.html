@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+
+{% load staticfiles %}
+
+<html lang=”ru”>
+    <head>
+        {% block head %}
+            {% block stylesheets %}
+                <link rel="stylesheet" type="text/css" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}">
+                <link rel="stylesheet" type="text/css" href="{% static 'bower_components/chosen/chosen.min.css' %}">
+                <link rel="stylesheet" type="text/css" href="{% static 'wiki_fiction/application.css' %}">
+            {% endblock %}
+            {% block javascripts %}
+                <script type="text/javascript" src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
+                <script type="text/javascript" src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+            {% endblock %}
+            <title>{% block title %}{% endblock %}</title>
+        {% endblock %}
+    </head>
+    <body>
+        {% block header %}
+            {% include 'partials/header.html' %}
+        {% endblock %}
+
+        <div class="container">
+            {% include 'partials/massages.html' %}
+            <div class="row">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+
+        <footer class="footer">
+            {% block footer %}
+                <div class="container">
+                    <p class="text-muted">WikiFiction 2015</p>
+                </div>
+            {% endblock %}
+        </footer>
+    </body>
+</html>

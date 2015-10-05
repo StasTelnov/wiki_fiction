@@ -1,4 +1,4 @@
-{% extends "papers/base_papers.html" %}
+{% extends "papers/papers_layout.html" %}
 
 {% block title %}Paper{% endblock %}
 
@@ -48,5 +48,5 @@
           </tbody>
         </table>
     {% endif %}
-    {% include 'papers/comment_form.html' %}
+    {% include 'papers/partials/comment_form.html' %}
 {% endblock %}

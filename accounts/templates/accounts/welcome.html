@@ -1,15 +1,16 @@
-{% extends "layouts/base.html" %}
-{% load staticfiles %}
+{% extends "accounts/accounts_layout.html" %}
 
-{% block stylesheets %}
-    {{ block.super }}
-    <link rel="stylesheet" type="text/css" href="{% static 'accounts/style.css' %}">
-{% endblock %}
 {% block title %}Welcome{% endblock %}
 
 {% block content %}
     <div class="starter-template">
         <h1>Hello!</h1>
-        <p class="lead">Don't worry. Be happy.</p>
+        {% if not user.is_authenticated %}
+        <p class="lead">
+                You have to login or
+                <a href="{% url 'accounts:sign_up' %}">sign up</a>
+                before continue :)
+        </p>
+        {% endif %}
     </div>
 {% endblock %}

@@ -14,8 +14,10 @@ class EmailOrUsernameModelBackend(ModelBackend):
         else:
             kwargs = {'username': username}
         try:
-            user = UserModel.objects.get(**kwargs)
-            if user.check_password(password):
-                return user
+            # user = UserModel.objects.get(**kwargs)
+            users = UserModel.objects.filter(**kwargs)
+            for user in users:
+                if user.check_password(password):
+                    return user
         except UserModel.DoesNotExist:
             return None

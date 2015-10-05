@@ -1,21 +1,26 @@
-from django.forms import ModelForm
 from .models import Paper, Comment
 from django import forms
+from libs.fields import ChosenSelect
 
 
-class PaperForm(ModelForm):
+class PaperForm(forms.ModelForm):
+
     class Meta:
         model = Paper
         fields = [
             'tags',
             'title',
             'text',
-            'rating',
         ]
-        widgets = {'tags': forms.SelectMultiple(attrs={'class': 'chosen-select', 'id': 'tags'})}
+        widgets = {
+            'tags': ChosenSelect(
+                attrs={'class': 'chosen-select', 'id': 'tags'}
+            )
+        }
 
 
-class CommentForm(ModelForm):
+class CommentForm(forms.ModelForm):
+
     class Meta:
         model = Comment
         fields = [

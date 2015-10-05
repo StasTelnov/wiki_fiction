@@ -3,3 +3,5 @@ __pycache__/
 .python-version
 wiki_fiction.sublime-project
 wiki_fiction.sublime-workspace
+static/bower_components/
+.bowerrc

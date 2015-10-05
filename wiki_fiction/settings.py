@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'papers',
     'accounts',
+    'libs',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -115,6 +116,11 @@ STATICFILES_DIRS = (
 AUTHENTICATION_BACKENDS = (
     'accounts.backends.EmailOrUsernameModelBackend',
 )
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+AUTH_USER_MODEL = 'accounts.MyUser'
 
 LOGGING = {
     'version': 1,

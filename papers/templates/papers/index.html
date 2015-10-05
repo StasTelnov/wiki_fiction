@@ -1,4 +1,4 @@
-{% extends "papers/base_papers.html" %}
+{% extends "papers/papers_layout.html" %}
 
 {% block title %}Papers{% endblock %}
 
@@ -43,7 +43,7 @@
             {% endfor %}
           </tbody>
         </table>
-            {% include 'pagination.html' with list=paper_list %}
+            {% include 'shared/pagination.html' with list=paper_list %}
     {% else %}
         <p>No papers are available.</p>
     {% endif %}
