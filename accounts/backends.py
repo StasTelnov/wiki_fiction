@@ -3,10 +3,12 @@ from django.contrib.auth.backends import ModelBackend
 
 
 class EmailOrUsernameModelBackend(ModelBackend):
+
     """
     This is a ModelBacked that allows authentication with either a username or an email address.
 
     """
+
     def authenticate(self, username=None, password=None, **kwargs):
         UserModel = get_user_model()
         if '@' in username:

@@ -12,7 +12,8 @@ from django.core.urlresolvers import reverse
 
 
 def index(request):
-    papers = Paper.objects.all().select_related('user').prefetch_related('tags').order_by('id')
+    papers = Paper.objects.all().select_related(
+        'user').prefetch_related('tags').order_by('id')
 
     paginator = Paginator(papers, 10)
     page = request.GET.get('page')
@@ -26,12 +27,14 @@ def index(request):
         papers = paginator.page(paginator.num_pages)
     p_range = range(papers.number - 3, papers.number + 4)
 
-    return render(request, 'papers/index.html', {'paper_list': papers, 'p_range': p_range})
+    return render(request, 'papers/index.html',
+                  {'paper_list': papers, 'p_range': p_range})
 
 
 def show(request, paper_id):
     try:
-        paper = Paper.objects.prefetch_related('comments__user').get(pk=paper_id)
+        paper = Paper.objects.prefetch_related(
+            'comments__user').get(pk=paper_id)
     except Paper.DoesNotExist:
         raise Http404
 
@@ -47,7 +50,8 @@ def show(request, paper_id):
     else:
         comment_form = CommentForm()
 
-    return render(request, 'papers/show.html', {'paper': paper, 'comment_form': comment_form})
+    return render(request, 'papers/show.html',
+                  {'paper': paper, 'comment_form': comment_form})
 
 
 @permission_required('papers.delete_comment')

@@ -1,5 +1,5 @@
-from django.contrib.auth.decorators import login_required 
-from django.conf import settings 
+from django.contrib.auth.decorators import login_required
+from django.conf import settings
 
 public_paths = [
     '/',
@@ -11,8 +11,9 @@ public_paths = [
 
 
 class AuthRequiredMiddleware(object):
+
     def process_view(self, request, view_func, view_args, view_kwargs):
         if request.path.startswith(settings.STATIC_URL) or request.path in public_paths:
-            return None 
-        else: 
+            return None
+        else:
             return login_required(view_func)(request, *view_args, **view_kwargs)

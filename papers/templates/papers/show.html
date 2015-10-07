@@ -6,17 +6,17 @@
     <h3 class="text-center">Paper</h3>
     <dl class="dl-horizontal">
         <dt>Title</dt>
-        <dd>{{  paper.title }}</dd>
+        <dd>{{ paper.title }}</dd>
         <dt>Rating</dt>
-        <dd>{{  paper.rating }}</dd>
+        <dd>{{ paper.rating }}</dd>
         <dt>Text</dt>
-        <dd>{{  paper.text }}</dd>
+        <dd>{{ paper.text }}</dd>
         <dt>Tags</dt>
-        <dd>{{  paper.tag_names }}</dd>
+        <dd>{{ paper.tag_names }}</dd>
         <dt>Created at</dt>
-        <dd>{{  paper.created_at|date:"d b, Y" }}</dd>
+        <dd>{{ paper.created_at|date:"d b, Y" }}</dd>
         <dt>User</dt>
-        <dd>{{  paper.user.get_full_name }}</dd>
+        <dd>{{ paper.user.get_full_name | default:"Mr. Nobody" }}</dd>
     </dl>
 {#    <a href="{% url 'papers:index' %}" class="btn btn-primary">Go to list</a>#}
     {% if paper.comments.all %}
@@ -35,7 +35,7 @@
             {% for comment in paper.comments.all %}
                 <tr>
                   <th scope="row">{{ comment.id }}</th>
-                  <td>{{ comment.user.get_full_name }}</td>
+                  <td>{{ paper.user.get_full_name | default:"Mr. Nobody" }}</td>
                   <td>{{ comment.text }}</td>
                   <td>{{ comment.rating }}</td>
                   <td>
