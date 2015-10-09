@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .forms import MyUserForm
+from .forms import MyUserForm, UserProfileForm
 from django.contrib.auth.models import Group
 
 
@@ -10,7 +10,8 @@ def welcome(request):
         if not request.user.is_authenticated():
             messages.error(request, "You're should login before continue.")
         else:
-            messages.error(request, "Sorry, but you do not have permission for this action.")
+            messages.error(request, "Sorry, but you do not have permission for \
+                                                                this action.")
     return render(request, 'accounts/welcome.html')
 
 
@@ -51,8 +52,20 @@ def sign_up(request):
                 login(request, user)
                 messages.success(request, "You're successfully sign up!")
             else:
-                messages.warning(request, "Sorry, but your account disabled yet.")
+                messages.warning(request, "Sorry, but your account disabled \
+                                                                        yet.")
             return redirect('welcome')
     else:
         form = MyUserForm()
     return render(request, 'accounts/sign_up.html', {'form': form})
+
+
+def profile(request):
+    form = UserProfileForm(request.POST or None, request.FILES or None, instance=request.user)
+
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        messages.success(request, "Your profile was successfully updated!")
+        return redirect('welcome')
+
+    return render(request, 'accounts/profile.html', {'form': form})

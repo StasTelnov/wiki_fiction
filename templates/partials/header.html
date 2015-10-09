@@ -13,6 +13,9 @@
             <div id="navbar" class="collapse navbar-collapse">
                 {% if user.is_authenticated %}
                     <ul class="nav navbar-nav">
+                        <li><a href="{% url 'accounts:profile' %}">Profile</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav">
                         <li><a href="{% url 'papers:index' %}">Papers</a></li>
                     </ul>
                     <div class="navbar-form navbar-right">

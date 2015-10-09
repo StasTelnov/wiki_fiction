@@ -1,0 +1,20 @@
+{% load lib_extras %}
+
+{% for error in form.non_field_errors %}
+    <p class="text-warning">
+        {{ error }}
+    </p>
+{% endfor %}
+{% for field in form %}
+    <div class="form-group {% if form.is_bound and field.errors %}has-error{% elif form.is_bound and not field.errors %}has-success{% endif %}">
+        {% for error in field.errors %}
+            <p class="text-danger">
+                {{ error }}
+            </p>
+        {% endfor %}
+        <label for="{{ field.id_for_label }}" class="control-label">{{ field.label }}</label>
+        {{ field | add_class:"form-control" }}
+         <span class="help-block">{{ field.help_text }}</span>
+    </div>
+{% endfor %}
+

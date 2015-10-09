@@ -1,3 +1,4 @@
+/*Fixed bootstrap table*/
 .table {
   table-layout:fixed;
 }
@@ -8,6 +9,7 @@
   text-overflow: ellipsis;
 }
 
-#tags {
-    width: 170px;
+/*#tags_chosen {
+    display: block;
 }
+*/

@@ -5,8 +5,8 @@ from django.contrib.auth.backends import ModelBackend
 class EmailOrUsernameModelBackend(ModelBackend):
 
     """
-    This is a ModelBacked that allows authentication with either a username or an email address.
-
+    This is a ModelBacked that allows authentication with either a username
+    or an email address.
     """
 
     def authenticate(self, username=None, password=None, **kwargs):
@@ -15,11 +15,14 @@ class EmailOrUsernameModelBackend(ModelBackend):
             kwargs = {'email': username}
         else:
             kwargs = {'username': username}
-        try:
-            # user = UserModel.objects.get(**kwargs)
-            users = UserModel.objects.filter(**kwargs)
-            for user in users:
-                if user.check_password(password):
-                    return user
-        except UserModel.DoesNotExist:
+
+        for user in UserModel.objects.filter(**kwargs):
+            if user.check_password(password):
+                return user
+        else:
             return None
+
+        # try:
+        #     user = UserModel.objects.get(**kwargs)
+        # except UserModel.DoesNotExist:
+        #     return None

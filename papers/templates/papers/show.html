@@ -1,4 +1,4 @@
-{% extends "papers/papers_layout.html" %}
+{% extends "papers/layout.html" %}
 
 {% block title %}Paper{% endblock %}
 
@@ -8,7 +8,7 @@
         <dt>Title</dt>
         <dd>{{ paper.title }}</dd>
         <dt>Rating</dt>
-        <dd>{{ paper.rating }}</dd>
+        <dd>{{ paper.rating | floatformat }}</dd>
         <dt>Text</dt>
         <dd>{{ paper.text }}</dd>
         <dt>Tags</dt>
@@ -37,7 +37,7 @@
                   <th scope="row">{{ comment.id }}</th>
                   <td>{{ paper.user.get_full_name | default:"Mr. Nobody" }}</td>
                   <td>{{ comment.text }}</td>
-                  <td>{{ comment.rating }}</td>
+                  <td>{{ comment.rating | floatformat }}</td>
                   <td>
                       {% if perms.papers.delete_comment %}
                           <a href="{% url 'papers:delete_comment' comment.id %}" class="btn btn-sm btn-danger">Delete</a>
@@ -48,5 +48,6 @@
           </tbody>
         </table>
     {% endif %}
+    <h3 class="text-center">Add comment</h3>
     {% include 'papers/partials/comment_form.html' %}
 {% endblock %}
