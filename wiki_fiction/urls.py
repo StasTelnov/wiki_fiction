@@ -16,10 +16,12 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from accounts.views import welcome
+from django.conf.urls.static import static
+from wiki_fiction import settings
 
 urlpatterns = [
     url(r'^$', welcome, name='welcome'),
     url(r'^papers/', include('papers.urls', namespace='papers')),
     url(r'^accounts/', include('accounts.urls', namespace='accounts')),
     url(r'^admin/', include(admin.site.urls)),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

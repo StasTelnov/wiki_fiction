@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import MyUserForm, UserProfileForm
 from django.contrib.auth.models import Group
+from django.contrib.auth import update_session_auth_hash
 
 
 def welcome(request):
@@ -65,6 +66,7 @@ def profile(request):
 
     if request.method == 'POST' and form.is_valid():
         form.save()
+        update_session_auth_hash(request, form.instance)
         messages.success(request, "Your profile was successfully updated!")
         return redirect('welcome')
 

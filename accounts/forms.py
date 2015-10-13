@@ -61,9 +61,9 @@ class UserProfileForm(forms.ModelForm):
         return password2
 
     def save(self, commit=True):
-        user = super(UserProfileForm, self).save(commit=False)
+        super().save(commit=False)
         if self.cleaned_data['new_password1']:
-            user.set_password(self.cleaned_data['new_password1'])
+            self.instance.set_password(self.cleaned_data['new_password1'])
         if commit:
-            user.save()
-        return user
+            self.instance.save()
+        return self.instance
