@@ -1,6 +1,6 @@
-from .models import Paper, Comment
 from django import forms
 from libs.fields import ChosenSelect
+from .models import Paper, Comment
 
 
 class PaperForm(forms.ModelForm):

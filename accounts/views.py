@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .forms import MyUserForm, UserProfileForm
 from django.contrib.auth.models import Group
 from django.contrib.auth import update_session_auth_hash
+from stronghold.decorators import public
+from .forms import CustomUserForm, UserProfileForm
 
 
+@public
 def welcome(request):
     if 'next' in request.GET:
         if not request.user.is_authenticated():
@@ -16,6 +18,7 @@ def welcome(request):
     return render(request, 'accounts/welcome.html')
 
 
+@public
 def sign_in(request):
     username = request.POST['username']
     password = request.POST['password']
@@ -39,13 +42,12 @@ def sing_out(request):
     return redirect('welcome')
 
 
+@public
 def sign_up(request):
     if request.method == 'POST':
-        form = MyUserForm(request.POST)
+        form = CustomUserForm(request.POST)
         if form.is_valid():
             user = form.save()
-            user_group = Group.objects.get(name='user')
-            user_group.user_set.add(user)
             username = request.POST['username']
             password = request.POST['password1']
             user = authenticate(username=username, password=password)
@@ -57,12 +59,13 @@ def sign_up(request):
                                                                         yet.")
             return redirect('welcome')
     else:
-        form = MyUserForm()
+        form = CustomUserForm()
     return render(request, 'accounts/sign_up.html', {'form': form})
 
 
 def profile(request):
-    form = UserProfileForm(request.POST or None, request.FILES or None, instance=request.user)
+    form = UserProfileForm(request.POST or None, request.FILES or None,
+                           instance=request.user)
 
     if request.method == 'POST' and form.is_valid():
         form.save()

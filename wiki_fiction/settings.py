@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'stronghold',
     'papers',
     'accounts',
     'libs',
@@ -50,7 +51,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'accounts.auth_required_middleware.AuthRequiredMiddleware',
+    'stronghold.middleware.LoginRequiredMiddleware',
 )
 
 ROOT_URLCONF = 'wiki_fiction.urls'
@@ -113,14 +114,14 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-AUTHENTICATION_BACKENDS = (
-    'accounts.backends.EmailOrUsernameModelBackend',
-)
-
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-AUTH_USER_MODEL = 'accounts.MyUser'
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
+STRONGHOLD_PUBLIC_URLS = (
+    r'^/admin.*?$',
+)
 
 LOGGING = {
     'version': 1,

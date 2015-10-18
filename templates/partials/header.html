@@ -22,7 +22,7 @@
                         <a class="btn btn-success" href="{% url 'accounts:logout' %}">Sign out</a>
                     </div>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a>Welcome, {{ user.get_full_name|default:"Mr. Nobody" }}!</a></li>
+                        <li><p class="navbar-text">Welcome, {{ user.get_full_name|default:"Mr. Nobody" }}!</p></li>
                     </ul>
                 {% else %}
                     {% include 'partials/login_form.html' %}

@@ -43,7 +43,7 @@
             {% endfor %}
           </tbody>
         </table>
-            {% include 'shared/pagination.html' with list=paper_list %}
+            {% include 'libs/pagination.html' with list=paper_list %}
     {% else %}
         <p>No papers are available.</p>
     {% endif %}

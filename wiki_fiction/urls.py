@@ -15,9 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from accounts.views import welcome
 from django.conf.urls.static import static
-from wiki_fiction import settings
+from django.conf import settings
+from accounts.views import welcome
 
 urlpatterns = [
     url(r'^$', welcome, name='welcome'),

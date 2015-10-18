@@ -1,21 +1,20 @@
-# from django.forms import ModelForm
-from .models import MyUser
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import ugettext_lazy as _
 from django import forms
+from .models import CustomUser
 
 
-class MyUserForm(UserCreationForm):
+class CustomUserForm(UserCreationForm):
 
     class Meta:
-        model = MyUser
+        model = CustomUser
         fields = ("username",)
 
 
 class UserProfileForm(forms.ModelForm):
 
     class Meta:
-        model = MyUser
+        model = CustomUser
         fields = (
             "username",
             "first_name",

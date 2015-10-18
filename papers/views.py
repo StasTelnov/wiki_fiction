@@ -1,14 +1,11 @@
-# from django.contrib.auth.decorators import login_required
-# from django.views import generic
-# from django.views.generic.edit import FormView
-from django.contrib.auth.decorators import permission_required
+# from django.contrib.auth.decorators import permission_required
 from django.http import Http404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Paper, Comment
-from .forms import PaperForm, CommentForm
 from django.contrib import messages
 from django.core.urlresolvers import reverse
+from .models import Paper, Comment
+from .forms import PaperForm, CommentForm
 
 
 def index(request):
@@ -25,10 +22,9 @@ def index(request):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         papers = paginator.page(paginator.num_pages)
-    p_range = range(papers.number - 3, papers.number + 4)
 
     return render(request, 'papers/index.html',
-                  {'paper_list': papers, 'p_range': p_range})
+                  {'paper_list': papers})
 
 
 def show(request, paper_id):
@@ -54,7 +50,7 @@ def show(request, paper_id):
                   {'paper': paper, 'comment_form': comment_form})
 
 
-@permission_required('papers.delete_comment')
+# @permission_required('papers.delete_comment')
 def delete_comment(request, comment_id):
     comment = get_object_or_404(Comment, pk=comment_id)
     comment.delete()
@@ -62,7 +58,7 @@ def delete_comment(request, comment_id):
     return redirect(comment.paper)
 
 
-@permission_required('papers.add_paper')
+# @permission_required('papers.add_paper')
 def new(request):
     if request.method == 'POST':
         form = PaperForm(request.POST)
@@ -80,7 +76,7 @@ def new(request):
     return render(request, 'papers/new.html', {'form': form})
 
 
-@permission_required('papers.change_paper')
+# @permission_required('papers.change_paper')
 def edit(request, paper_id):
     paper = get_object_or_404(Paper, pk=paper_id)
     form = PaperForm(request.POST or None, instance=paper)
@@ -93,35 +89,10 @@ def edit(request, paper_id):
     return render(request, 'papers/edit.html', {'form': form})
 
 
-@permission_required('papers.delete_paper')
+# @permission_required('papers.delete_paper')
 def delete(request, paper_id):
     paper = get_object_or_404(Paper, pk=paper_id)
     paper.delete()
     messages.success(request, 'Paper was successfully deleted')
 
     return redirect(reverse('papers:index'))
-
-
-# class LoginRequiredMixin(object):
-#     @classmethod
-#     def as_view(cls, **initkwargs):
-#         view = super(LoginRequiredMixin, cls).as_view(**initkwargs)
-#         return login_required(view)
-#
-#
-# class IndexPapers(LoginRequiredMixin, generic.ListView):
-#     template_name = 'papers/index.html'
-#
-#     def get_queryset(self):
-#         return Paper.objects.all()[:10]
-#
-#
-# class ShowPaper(LoginRequiredMixin, generic.DetailView):
-#     model = Paper
-#     template_name = 'papers/show.html'
-#
-#
-# class NewPaper(LoginRequiredMixin, FormView):
-#     template_name = 'papers/new.html'
-#     form_class = PaperForm
-#     success_url = 'papers/show'

@@ -2,10 +2,10 @@
     $(document).ready(function() {
         $(".chosen-select").chosen();
 
-        // Bootstrap theme for inputs
+        // Bootstrap theme for chosen inputs
         var
-            $formGroup = $('#tags_chosen').closest(".form-group "),
-            $chosenChoices = $('#tags_chosen').find("ul.chosen-choices");
+            $chosenChoices = $("ul.chosen-choices"),
+            $formGroup = $chosenChoices.closest(".form-group ");
 
         if($formGroup.hasClass("has-error")){
             $chosenChoices.css("border-color","#a94442");
